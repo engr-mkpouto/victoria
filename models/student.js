@@ -1,6 +1,5 @@
 const { Timestamp } = require('mongodb');
 const mongoose = require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose');
 const Schema = mongoose.Schema;
 
 const ImageSchema = new mongoose.Schema({
@@ -14,7 +13,7 @@ const StudentSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
     fname: {
         type: String,
@@ -29,12 +28,12 @@ const StudentSchema = new Schema({
     reg: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
     time: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
     date: {
         type: String,

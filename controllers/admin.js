@@ -1,9 +1,10 @@
 const User = require('../models/user');
 const Student = require('../models/student');
+const Attend = require('../models/attendance')
 const { validationResult } = require('express-validator');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const jwt = require('jsonwebtoken');
 const { errorHandler } = require('../helpers/dbErrorHandling');
+const axios = require('axios')
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const transporter = nodemailer.createTransport(smtpTransport({
@@ -38,7 +39,8 @@ module.exports.renderDashboard = async(req,res)=>{
   const email = req.user.email
   const users = await User.find({});
   const students = await Student.find({});
-  res.render('admin/dashboard', {users, students, username, email, period})
+  const attends = await Attend.find({});
+  res.render('admin/dashboard', {users, students, attends, username, email, period})
 };
 
 module.exports.check = (req, res, next) => {
@@ -178,9 +180,9 @@ module.exports.activation =  async(req,res)=>{
   m = m < 10 ? "0" + m : m;
   s = s < 10 ? "0" + s : s;
   const time = `${h+':'+m+' '+ampm}`
-  fetch('https://api.ipify.org')
-  .then((res) => res.text())
-  .then(ip => {
+  await axios.get('https://api.ipify.org')
+  .then(async(response) => {
+    const ip = response.data
     console.log('verifing...')
     // Veryfy token if it still functional or expired
     jwt.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, async(err, decode) => {
@@ -319,8 +321,8 @@ module.exports.search = async(req, res) => {
   Student.findOne({reg: q}, (err, user) => {
     if (err || !user) {
       color = `style="color: red;"`
-      header = 'No Such Student Found'
-      note = `The Student Reg number ${q} does not exist`
+      header = 'No Such User'
+      note = `The User Reg number ${q} does not exist`
       regs = ''
       email = ''
       d = 'd-none'
@@ -347,14 +349,19 @@ module.exports.sq = (req, res) => {
 };
 
 module.exports.pass = async(req, res) => {
-  const {password, email} = req.body;
-  Student.findOne({email}, (err, user) => {
+  const {password, email, subject} = req.body;
+  Student.findOne({email}, async(err, user) => {
     if (err || !user) {
       req.flash('error', 'An error occured')
       res.redirect('/admin/dashboard')
     } else {
       const pass = user.password
       if (password === pass) {
+        const attends = new Attend({})
+        attends.email = email
+        attends.name = `${user.fname} ${user.lname}`
+        attends.subject = subject
+        await attends.save();
         res.redirect(`/admin/dashboard/student/${user._id}`)
       } else {
         req.flash('error', 'Wrong password')

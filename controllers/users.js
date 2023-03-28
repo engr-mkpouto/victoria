@@ -4,7 +4,6 @@ const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const { errorHandler } = require('../helpers/dbErrorHandling');
 const otpgenerate = require('otp-generator')
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const nodemailer = require('nodemailer');
 const axios = require('axios')
 const smtpTransport = require('nodemailer-smtp-transport');
@@ -216,11 +215,9 @@ module.exports.activation =  async(req,res)=>{
             user.year = year
             user.source = 'local'
             user.images = req.files.map(f => ({url:f.path, filename:f.filename}))
-            await fetch('https://api.ipify.org')
-            .then((res) => res.text())
-            .then(ip => {
-              const ipadd = ip
-              user.ip = ipadd
+            await axios.get('https://api.ipify.org')
+            .then(async(response) => {
+              user.ip = response.data
             })
             .catch(err => {
               req.flash('error', 'Something went wrong')
@@ -333,7 +330,7 @@ module.exports.auth = (req, res, next) => {
   }
 }
 
-module.exports.authsuccess = (req, res, next) => {
+module.exports.authsuccess = async(req, res, next) => {
   const { username, password } = req.body;
   const email = req.user.email;
   const userAgent = req.headers['user-agent'];
@@ -358,12 +355,12 @@ module.exports.authsuccess = (req, res, next) => {
     browser = "Unknown";
     imgs = "Unknown";
   }
-  fetch('https://api.ipify.org')
-  .then((res) => res.text())
-  .then(ip => {
-    fetch(`http://ip-api.com/json/${ip}`)
-    .then(response =>response.json())
-    .then(data => {
+  await axios.get('https://api.ipify.org')
+  .then(async(response) => {
+    const ip = response.data
+    axios.get(`http://ip-api.com/json/${ip}`)
+    .then(async(response) => {
+      const data = response.data
       const city = data.city
       const country = data.country
       const location = `${city}, ${country}`
@@ -420,12 +417,11 @@ module.exports.authsuccess = (req, res, next) => {
 }
 
 module.exports.login=async(req, res, next) => {
-  const { username} = req.body;
+  const { username } = req.body;
   req.flash('success', `welcome back ${username}`);
   const redirectUrl = req.session.returnTo || '/index';
   console.log(req.session.returnTo)
   delete req.session.returnTo;
-  res.redirect(redirectUrl);
 };
 
 module.exports.logout=function(req, res, next) {
@@ -833,3 +829,25 @@ module.exports.RegComplete =  async(req,res)=>{
     }
   }
 };
+
+const Fingerprint2 = require('fingerprintjs2');
+const Attend = require('../models/attendance')
+module.exports.renderFinger = (req,res) => {
+  res.render('users/finger')
+};
+
+module.exports.finger = async(req, res) => {
+  const { fingerprint } = req.body;
+    
+    // Find user with matching fingerprint hash
+    // const user = await collection.findOne({ fingerprint });
+    const users = new Attend({});
+    users.finger = fingerprint
+    await users.save();
+    res.send(`Success and hash is = ${fingerprint}`)
+    // if (users) {
+    //   res.send('Authentication successful!');
+    // } else {
+    //   res.send('Authentication failed!');
+    // }
+}

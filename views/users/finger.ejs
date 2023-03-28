@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Fingerprint authentication</title>
+  </head>
+  <body>
+    <form id="fingerprint-form" action="/authenticate" method="post">
+      <label for="fingerprint-input">Place your finger on the scanner</label>
+      <input type="hidden" id="fingerprint-input" name="fingerprint">
+      <button type="submit">Submit</button>
+    </form>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.5/fingerprint2.min.js"></script>
+    <script>
+        const fingerprintForm = document.querySelector('#fingerprint-form');
+        const fingerprintInput = document.querySelector('#fingerprint-input');
+        
+        fingerprintForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const fingerprint = await Fingerprint2.get();
+            fingerprintInput.value = fingerprint;
+            console.log(Fingerprint2.get)
+            console.log(fingerprint)
+            // fingerprintForm.submit();
+        });
+    </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/biometricjs/dist/biometric.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
+<script>
+  $(document).ready(function() {
+    Biometric.init()
+      .then(() => {
+        console.log('Biometric initialized');
+        // You can now use the Biometric object here
+        $('#fingerprint-form').submit(function(e) {
+          e.preventDefault();
+          Biometric.getFingerprint((error, fingerprint) => {
+            if (error) {
+              console.error(error);
+              return;
+            }
+            console.log('Fingerprint:', fingerprint);
+            $('#fingerprint-input').val(fingerprint);
+            $('#fingerprint-form').submit();
+          });
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+</script>
+
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>Fingerprint Capture</title>
+</head>
+<body>
+	<video id="video" width="640" height="480" autoplay></video>
+	<canvas id="canvas" width="640" height="480"></canvas>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/biometric/1.0.3/biometric.min.js"></script>
+	<script>
+		const video = document.getElementById('video');
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+
+		navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
+			video.srcObject = stream;
+			video.play();
+		}).catch((err) => {
+			console.log("An error occurred: " + err);
+		});
+
+		function captureFingerprint() {
+			ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+			const imageData = canvas.toDataURL('image/png');
+			biometric.startCapture().then(() => {
+				biometric.onImageCaptured((data) => {
+					// process the captured fingerprint image
+                    console.log(data)
+				});
+			}).catch((err) => {
+				console.log("An error occurred: " + err);
+			});
+		}
+	</script>
+</body> -->
+</html>

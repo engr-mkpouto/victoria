@@ -1,0 +1,39 @@
+Things to Note
+If you are asked what the index.js file does tell them that it the main file tht runs every other functionality.
+That we have a file use to hide and store our own personal data or sensitive infonamation called .env but I can't show because it contains sensitive information
+What connects them is the dotenv program
+If you need to explain each package you explain it this way
+
+Thia are the packages you fine
+"dependencies": {
+    "axios": "^1.3.2", => It's use for fetching and getting details from a particular api call. what is api? just do quik research on it
+    "body-parser": "^1.20.1", => it use to pass data from the frontend to the server side of the web
+    "cloudinary": "^1.33.0", => To store images in the cloud
+    "connect-flash": "^0.1.1", => just take this off
+    "connect-mongo": "^4.6.0", => also take it off
+    "dotenv": "^16.0.3", => This what connects the .env to all the files in the server that call open it usage without any declaration exception of the one declared in the parent file called index.js
+    "ejs": "^3.1.8", => This is the front end template
+    "ejs-mate": "^4.0.0", This is the frontend template engine
+    "express": "^4.18.2", this is the server side frame work use in writing the nodejs
+    "express-flash": "^0.0.2", This is for notification pop up
+    "express-jwt": "^8.4.0", This is for token authentication
+    "express-mongo-sanitize": "^2.2.0", => This prevent users from entrying any script or malware in the form
+    "express-session": "^1.17.3", => It use for user section which makes the user to stay login for as long as you set (for this project it is 7days)
+    "express-validator": "^6.14.3", => It validate user input
+    "fingerprintjs2": "^2.1.4", For the biometrics
+    "jsonwebtoken": "^9.0.0",Same for authentication
+    "method-override": "^3.0.0", check it oout
+    "mongoose": "^6.9.0", this is use to setup and prepare your database to store information and it helps you to read and modify them
+    "multer": "^1.4.5-lts.1", for confirguration of image
+    "multer-storage-cloudinary": "^4.0.0", For confirguration of the image and helps to send it to the cloud and generate a link for it
+    "node-webcam": "^0.8.1", For the face capture
+    "nodemailer": "^6.9.1", For sending email
+    "nodemailer-smtp-transport": "^2.7.4", For setting up the nodemailer to send email
+    "nodemon": "^2.0.20",To run the project and resart it automatically was the is any changes
+    "otp-generator": "^4.0.1", To generate random words which in this project is used to generate 12 digits password for the student 
+    "passport": "^0.6.0", who the user authentication
+    "passport-local": "^1.0.0", This was help to processs every auth in the server side
+    "passport-local-mongoose": "^7.1.2" This helps to resd and modify user when logingin of signingup
+  }
+
+  THIS IS FOR YOU SO IT MAY HELP YOU, I WHICH YOU ALL THE BEST ❤️

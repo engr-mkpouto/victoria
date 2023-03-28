@@ -38,6 +38,10 @@ router.route('/register')
 .get(isLoggedOut, users.renderRegister )
 .post(isLoggedOut, validRegister, CatchAsync(users.register))
 
+router.route('/authenticate')
+.get(isLoggedOut, users.renderFinger )
+.post(isLoggedOut, CatchAsync(users.finger))
+
 router.route('/index/register')
 .get(isLoggedIn, isUser, users.renderStudentReg )
 .post(isLoggedIn, isUser, validStudent, CatchAsync(users.Reg))

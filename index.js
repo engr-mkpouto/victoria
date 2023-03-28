@@ -1,23 +1,20 @@
 if(process.env.NODE_ENV !=='production'){
-  require('dotenv').config()
+    require('dotenv').config()
 }
-
-// const WebSDK = require('@loginid/node-sdk');
-// const lAdmin = new WebSDK(process.env.CLIENT_ID, process.env.PRIVATE_KEY, process.env.BASE_URL);
-
 
 const express = require("express");
 const app = express();
 const path = require('path');
 const port = process.env.PORT;
 const bodyparser = require('body-parser');
+const Fingerprint2 = require('fingerprintjs2');
 
 // Use bodyparser
 app.use(bodyparser.json());
 
 const methodOverride = require('method-override');
 
-// routes+
+// routes
 const userRoutes = require('./routes/users');
 const passwordRoutes = require('./routes/password')
 const adminRoutes = require('./routes/admin')
@@ -96,6 +93,27 @@ app.use((req,res,next)=>{
   res.locals.error=req.flash('error')
   next()
 });
+app.get('/auth', (req, res) => {
+  const fingerPrintPromise = new Promise((resolve) => {
+    Fingerprint2.get((components) => {
+      const values = components.map((component) => component.value);
+      resolve(Fingerprint2.x64hash128(values.join(''), 31));
+    });
+  })
+  fingerPrintPromise.then((fingerprint) => {
+    User.findOne({ username: fingerprint }, (err, result) => {
+      if (result) {
+        // User is authenticated based on fingerprint
+        res.send('Authenticated');
+        console.log(result)
+      } else {
+        // User needs to create a new account
+        res.send('Please create a new account');
+        console.log(fingerprint)
+      }
+    });
+  });
+})
 
 app.get('/', (req,res)=>{
   res.render('home')
@@ -117,5 +135,5 @@ app.use((err,req,res,next)=>{
 })
 
 app.listen(port, ()=>{
-    console.log(`listening at port ${port}`)
-})
+  console.log(`listening at port ${port}`)
+});
