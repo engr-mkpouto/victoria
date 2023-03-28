@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"  crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/css/student.css">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/victoria-lo/Nodemailer-Tutorial/master/public/favicon.ico" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Book form</title>
+</head>
+<body>
+    <style>
+        *{
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+        }
+      
+        .php-email-form {
+            width: 100%;
+            margin-top: 30px;
+            background: #fff;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+        }
+      
+        :root {
+            --color-default: #212529;
+            --color-primary: #ce1212;
+            --color-secondary: #37373f;
+        }
+      
+        .php-email-form .form-group {
+            padding-bottom: 20px;
+        }
+        
+        .php-email-form .error-message {
+            display: none;
+            color: #fff;
+            background: #df1529;
+            text-align: left;
+            padding: 15px;
+            font-weight: 600;
+        }
+          
+        .php-email-form .error-message br+br {
+            margin-top: 25px;
+        }
+          
+        .php-email-form .sent-message {
+            display: none;
+            color: #fff;
+            background: #059652;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+        }
+          
+        .php-email-form .loading {
+            display: none;
+            background: #fff;
+            text-align: center;
+            padding: 15px;
+        }
+          
+        .php-email-form .loading:before {
+            content: "";
+            display: inline-block;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            margin: 0 10px -6px 0;
+            border: 3px solid #059652;
+            border-top-color: #fff;
+            -webkit-animation: animate-loading 1s linear infinite;
+            animation: animate-loading 1s linear infinite;
+        }
+          
+        .php-email-form input,
+        .php-email-form textarea {
+            border-radius: 0;
+            box-shadow: none;
+            font-size: 14px;
+        }
+          
+        .php-email-form input:focus,
+        .php-email-form textarea:focus {
+            border-color: var(--color-primary);
+        }
+          
+        .php-email-form input {
+            height: 48px;
+        }
+          
+        .php-email-form textarea {
+            padding: 10px 12px;
+        }
+          
+        .text-center button[type=submit] {
+            background: var(--color-primary);
+            border: 0;
+            padding: 12px 40px;
+            color: #fff;
+            transition: 0.4s;
+            border-radius: 50px;
+        }
+          
+        .text-center button[type=submit]:hover {
+            background: #ec2727;
+        }
+        
+        .text-center button[type=button] {
+            background: var(--color-primary);
+            border: 0;
+            padding: 12px 40px;
+            color: #fff;
+            transition: 0.4s;
+            border-radius: 50px;
+        }
+          
+        .text-center button[type=button]:hover {
+            background: #ec2727;
+        }
+
+        @keyframes animate-loading {
+            0% {
+              transform: rotate(0deg);
+            }
+          
+            100% {
+              transform: rotate(360deg);
+            }
+        }
+      </style>
+      <body>
+          <div class="container">
+            
+              <form action="/index/register" method="post" class="php-email-form p-3 p-md-4">
+                <%- include('../partials/flash') %> 
+                <div class="text-center"><h2>Student Registration</h2></div>
+                  <div class="row" id='input-cont'>
+                    <div class="col-xl-6 form-group">
+                      <input type="text" name="fname" class="form-control" id="fname" placeholder="First Name" required>
+                    </div>
+                    <div class="col-xl-6 form-group">
+                      <input type="text" name="lname" class="form-control" id="lname" placeholder="Last Name" required>
+                    </div>
+                    <div class="col-xl-6 form-group">
+                      <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="col-xl-6 form-group">
+                      <input type="text" class="form-control" name="reg" id="reg" placeholder="Reg Number" required>
+                    </div>
+                    <div class="col-xl-6 form-group">
+                      <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject 1" required>
+                    </div>
+                    <div class="col-xl-6 form-group">
+                      <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject 2" required>
+                    </div>
+                  </div>
+                  <div class="text-center" style="gap: 10px;"><button type="button" onclick='addInput()'>+Add input</button><button type="submit" value="submit">Submit</button</div><button type="button" class="buttons" data-modal="modalOne">Finger Print</button></div>
+              </form>
+          </div>
+          <div id="modalOne" class="modal">
+            <a class="close">&times;</a>
+            <div class="container" style="width: 360px;">
+              <div class="card-body alert alert-primary" role="alert">
+                  <div class="image" style="color: rgb(169, 169, 228);">
+                      <%- include('../partials/flash') %>
+                      <img src="/Images/images.png" alt="success" class="card-img-top" style="height: 100px; width: 100px; border-radius: 50%; margin: 5%;"/>
+                      <button id="btns" class="btn btn-primary">Capture</button>
+                      <hr>
+                  </div>
+              </div>
+            </div>
+          </div>
+        
+        <script type="text/javascript">
+            const container = document.getElementById('input-cont');
+            var inputCount = 0;
+            var sub = 3;
+            
+            // Call addInput() function on button click
+            const row = document.querySelector('.row')
+            function addInput(){
+                inputCount++; // Increment input count by one
+                if(inputCount>3){
+                    alert('Max Input allowed is 5');
+                    return;
+                }
+                let div = document.createElement('div');
+                div.classList = 'col-xl-6 form-group'
+                container.appendChild(div);
+                let input = document.createElement('input');
+                input.placeholder = `Subject ${sub++}`;
+                input.classList = 'form-control'
+                input.required
+                input.name = 'subject'
+                input.type = 'text'
+                div.appendChild(input);
+            }
+            
+        </script>
+        <script>
+          let modalBtns = [...document.querySelectorAll(".buttons")];
+          modalBtns.forEach(function (btn) {
+              btn.onclick = function () {
+              let modal = btn.getAttribute("data-modal");
+              document.getElementById(modal).style.display = "block";
+              };
+          });
+          let closeBtns = [...document.querySelectorAll(".close")];
+          closeBtns.forEach(function (btn) {
+              btn.onclick = function () {
+              let modal = btn.closest(".modal");
+              modal.style.display = "none";
+              };
+          });
+          window.onclick = function (event) {
+              if (event.target.className === "modal") {
+              event.target.style.display = "none";
+              }
+          };
+          const finger = document.querySelector("#btns")
+          finger.onclick = function () {
+            let closeBtn = [...document.querySelectorAll("#btns")];
+            closeBtn.forEach(function (btn) {
+              btn.onclick = function () {
+              let modal = btn.closest(".modal");
+              alert('Oops server down, try again later or use the autogenerated password and face capture for authentication');
+              modal.style.display = "none";
+            };
+          });
+          }
+      </script>
+</body>
+</html>
+    

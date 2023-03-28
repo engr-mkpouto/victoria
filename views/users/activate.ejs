@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/ajax-image.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="body">
+    <div class="container-image">
+        <div class="card-body">
+            <div class="image">
+                <%- include('../partials/flash') %>
+                <div class="file-upload">
+                    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+                    <form action="/activate/<%= token %>" method="post" enctype="multipart/form-data">
+                        <div class="image-upload-wrap" custom-file>
+                          <input class="file-upload-input" type="file" name="image" id="image" onchange="readURL(this);" accept="image/*" />
+                          <div class="drag-text">
+                              <h3>Drag and drop a file or select add Image</h3>
+                          </div>
+                        </div>
+                        <div class="file-upload-content">
+                          <img class="file-upload-image" src="#" alt="your image" />
+                          <div class="image-title-wrap">
+                            <a type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></a>
+                          </div>
+                        </div><br>
+                        <button class="btn btn-info" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+    </div>
+  </div>
+  <!-- <div class="file-upload">
+      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+      <form class="image-upload-wrap" action="http:localhost:8000/activate/ujdjfjdfivfdhjskh" method="post">
+        <input class="image-upload-wrap file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+        <h3 class="drag-text">Drag and drop a file or select add Image</h3>
+        <button>jSubmit</button>
+      </form>
+      <div class="file-upload-content">
+        <img class="file-upload-image" src="#" alt="your image" />
+          <a type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></a>
+        </div>
+      </div>
+  </div> -->
+  <script>
+      window.console = window.console || function(t) {};
+  </script>
+  <script>
+    if (document.location.search.match(/type=embed/gi)) {
+      window.parent.postMessage("resize", "*");
+    }
+  </script>
+  <script id="rendered-js" >
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            $('.image-upload-wrap').hide();
+
+            $('.file-upload-image').attr('src', e.target.result);
+            $('.file-upload-content').show();
+
+            $('.image-title').html(input.files[0].name);
+          };
+
+          reader.readAsDataURL(input.files[0]);
+
+        } else {
+          removeUpload();
+        }
+      }
+
+      function removeUpload() {
+        $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+        $('.file-upload-content').hide();
+        $('.image-upload-wrap').show();
+      }
+      $('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+      });
+      $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
+      });
+  </script>
+  <script src="/javascripts/ajax.js"></script>
+  <script src="/javascripts/flash.timeout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

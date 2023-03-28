@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Xtreme lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Xtreme admin lite design, Xtreme admin lite dashboard bootstrap 5 dashboard template"/>
+    <meta name="description" content="Xtreme Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title><%= username %>  Admin Dashboard</title>
+    <link href="/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet" />
+    <link href="/dist/css/style.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/flash.css">
+</head>
+<body>
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+      <header class="topbar" data-navbarbg="skin5">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark fixed-top">
+                
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <ul class="navbar-nav float-start me-auto">
+                        <li class="nav-item search-box">
+                            <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-magnify fs-4"></i></a>
+                            <form action="/admin/search/q" method="post" class="app-search position-absolute">
+                              <input type="text" class="form-control" id="search" name="search" placeholder="Search &amp; enter" />
+                              <a class="srh-btn"><i class="mdi mdi-close"></i></a>
+                              <button class="btn btn-info" type="submit">Search</button>
+                            </form>
+                            
+                        </li>
+                    </ul>
+                  <img
+                    src="/assets/images/users/1.jpg"
+                    alt="user"
+                    class="rounded-circle"
+                    width="31"
+                  />
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <aside class="left-sidebar" data-sidebarbg="skin6">
+        <div class="scroll-sidebar">
+          <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+              <li>
+                <div class="user-profile d-flex no-block dropdown m-t-20">
+                  <div class="user-pic">
+                    <img
+                      src="/assets/images/users/1.jpg"
+                      alt="users"
+                      class="rounded-circle"
+                      width="40"
+                    />
+                  </div>
+                  <div class="user-content hide-menu m-l-10">
+                    <a
+                      href="#"
+                      class=""
+                      id="Userdd"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <h5 class="m-b-0 user-name font-medium"><%= username %><i class="mdi mdi-chevron-down fs-4"></i></h5>
+                      <span class="op-5 user-email"><%= email %></span>
+                    </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Userdd">
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account m-r-5 m-l-5"></i> My Dashboard</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/logout"><i class="mdi mdi-power m-r-5 m-l-5"></i> Logout</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+      <div class="page-wrapper">
+        <div class="page-breadcrumb">
+          <div class="row align-items-center">
+            <div class="col-5">
+              <h4 class="page-title">Dashboard</h4>
+              <h5><%= 'Good '+  period +' '+ username %></h5>
+              <div class="d-flex align-items-center">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+            <div class="col-7">
+              <%- include('../partials/flash') %>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-md-flex">
+                    <div>
+                      <h4 class="card-title">Registered Students</h4>
+                      <h5 class="card-subtitle">
+                        List of student that as registered
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table v-middle">
+                    <thead>
+                      <tr class="bg-light">
+                        <th class="border-top-0">Students</th>
+                        <th class="border-top-0">Email</th>
+                        <th class="border-top-0">Reg Number</th>
+                        <th class="border-top-0">Time</th>
+                        <th class="border-top-0">Date</th>
+                        <th class="border-top-0">Year</th>
+                        <th class="border-top-0">More info</th>
+                      </tr>
+                      <% for (let student of students){ %>
+                        <tbody>
+                          <tr>
+                            <td><h4 class="m-b-0 font-16"><%= student.fname %> <%= student.lname %></h4></td>
+                            <td><%= student.email %></td>
+                            <td><%= student.reg %></td>
+                            <td><%= student.time %></td>
+                            <td><%= student.date %></td>
+                            <td><%= student.year %></td>
+                             
+                            <td>
+                              <a href="/admin/search/?q=<%= student.reg %> "><label class="label label-info">Verify</label></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      <%}%>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-md-flex">
+                    <div>
+                      <h4 class="card-title">User</h4>
+                      <h5 class="card-subtitle">
+                        List of users registering student
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table v-middle">
+                    <thead>
+                      <tr class="bg-light">
+                        <th class="border-top-0">Users</th>
+                        <th class="border-top-0">Email</th>
+                        <th class="border-top-0">Ip address</th>
+                        <th class="border-top-0">Source</th>
+                        <th class="border-top-0">Time</th>
+                        <th class="border-top-0">Date</th>
+                        <th class="border-top-0">Year</th>
+                        <th class="border-top-0">More info</th>
+                      </tr>
+                      <% for (let user of users){ %>
+                        <tbody>
+                          <tr>
+                            <td><h4 class="m-b-0 font-16"><%= user.username %> </h4></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.ip %></td>
+                            <td><%= user.source %></td>
+                            <td><%= user.time %></td>
+                            <td><%= user.date %></td>
+                            <td><%= user.year %></td>
+                            <td>
+                              <a href="/admin/dashboard/users/<%= user._id %> "><label class="label label-info">Check Out</label></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      <%}%>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/javascripts/flash.timeout.js"></script>
+  <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/dist/js/app-style-switcher.js"></script>
+  <script src="/dist/js/waves.js"></script>
+  <script src="/dist/js/sidebarmenu.js"></script>
+  <script src="/dist/js/custom.js"></script>
+  <script src="/assets/libs/chartist/dist/chartist.min.js"></script>
+  <script src="/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+  <script src="/dist/js/pages/dashboards/dashboard1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+</body>
+</html>
