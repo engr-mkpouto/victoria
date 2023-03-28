@@ -5,10 +5,10 @@ This project is owned by Engr. Mkouto Francis
 </html><img src="https://res.cloudinary.com/dlbofzsyr/image/upload/v1675989447/Oregano/IMG-20220723-WA0027_geshbo.jpg" alt="Engr. Mkpouto Francis" style="width: 100%; hieght: 100%;"><img></img>
 
 Link to social media: <br>
-[https://facebook.com/gikpayee](Facebook)<br>
-[https://twitter.com/FGikpayee](Twitter)<br>
-[https://t.me/gikpayee](Telegram)<br>
-[https://github.com/nkpouto99](Github)
+[Facebook](https://facebook.com/gikpayee)<br>
+[Twitter](https://twitter.com/FGikpayee)<br>
+[Telegram](https://t.me/gikpayee)<br>
+[Github](https://github.com/nkpouto99)
 
 ## Scanner SDK
 <p>Due to the problem now with digital persona, because am using U. are U. fingerprint 4500 digital-persona</p>
