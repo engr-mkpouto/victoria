@@ -422,6 +422,7 @@ module.exports.login=async(req, res, next) => {
   const redirectUrl = req.session.returnTo || '/index';
   console.log(req.session.returnTo)
   delete req.session.returnTo;
+  res.redirect(redirectUrl);
 };
 
 module.exports.logout=function(req, res, next) {
