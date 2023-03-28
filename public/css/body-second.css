@@ -1,0 +1,44 @@
+.copy-link {
+    --hieght:36px;
+
+    display: flex;
+    max-width: 250px;
+}
+
+.copy-link-input {
+    flex-grow: 1;
+    padding: 0 8px;
+    font: 14px;
+    border: 1px solid #cccccc;
+    border-right: none;
+    outline: none;
+}
+
+.copy-link-input:hover {
+    background: #eeeeee;
+}
+
+.copy-link-button {
+    flex-shrink: 0;
+    width: var(--hieght);
+    height: var(--hieght );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dddddd;
+    outline: none;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+}
+
+.copy-link-button:hover {
+    background: #cccccc;
+}
+
+input::placeholder {
+    color: black;
+}
+
+button:active {
+    transform: scale(0.98);
+}

@@ -1,0 +1,1 @@
+setTimeout(() => document.querySelector('#alert').remove(), 3000)
