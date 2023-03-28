@@ -5,7 +5,7 @@ if(process.env.NODE_ENV !=='production'){
 const express = require("express");
 const app = express();
 const path = require('path');
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 const bodyparser = require('body-parser');
 const Fingerprint2 = require('fingerprintjs2');
 
